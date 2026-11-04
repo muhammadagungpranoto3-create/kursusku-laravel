@@ -11,7 +11,7 @@ $(document).on('change', '#course_id', function () {
         $('#availability')
             .removeClass('alert-success alert-danger')
             .addClass('alert-secondary')
-            .text('Pilih kursus untuk melihat sisa kursi.');
+            .text('Pilih kursus untuk melihat kuota dan status.');
         return;
     }
 
@@ -25,10 +25,11 @@ $(document).on('change', '#course_id', function () {
         method: 'GET',
         dataType: 'json',
         success(data) {
+            const label = { draft: 'Draft', open: 'Open', closed: 'Closed' }[data.status] || data.status;
             $('#availability')
                 .removeClass('alert-secondary alert-danger')
                 .addClass('alert-success')
-                .text(`${data.remaining} kursi tersisa untuk ${data.course}.`);
+                .text(`${data.code} — ${data.name}. Kuota ${data.quota}. Status ${label}.`);
         },
         error() {
             $('#availability')
