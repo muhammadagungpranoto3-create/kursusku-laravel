@@ -22,6 +22,7 @@
                     <th>Kuota</th>
                     <th>Mulai</th>
                     <th>Status</th>
+                    <th class="text-end">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,10 +43,25 @@
                             @endphp
                             <span class="seat-pill {{ $statusClass }}">{{ ucfirst($course->status) }}</span>
                         </td>
+                        <td>
+                            <div class="d-flex gap-1 flex-wrap justify-content-end">
+                                <a href="{{ route('courses.show', $course) }}"
+                                   class="btn btn-sm btn-outline-primary">Detail</a>
+                                <a href="{{ route('courses.edit', $course) }}"
+                                   class="btn btn-sm btn-outline-warning">Edit</a>
+                                <form method="POST"
+                                      action="{{ route('courses.destroy', $course) }}"
+                                      onsubmit="return confirm('Hapus kursus ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center py-4 text-secondary">
+                        <td colspan="7" class="text-center py-4 text-secondary">
                             Belum ada data kursus.
                         </td>
                     </tr>
