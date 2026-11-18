@@ -1,53 +1,672 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
+/* ------------------------------------------------------------
+   KursusKu - gaya mengikuti repositori TikTok-main
+   Ciri gaya : latar hitam (#000), teks putih, kartu #191919,
+               border #bdbcbc yang menjadi putih saat hover,
+               tombol outline yang berbalik warna saat hover,
+               garis bawah menu yang meluncur, transisi linear,
+               scrollbar tipis putih, font Kanit.
+   ------------------------------------------------------------ */
 :root {
-    --kk-teal: #0f766e;
-    --kk-ink: #17312b;
-    --kk-paper: #f4f1ea;
+    --kk-black: #000;
+    --kk-white: #fff;
+    --kk-card: #191919;
+    --kk-card-2: #0d0d0d;
+    --kk-gray: #bdbcbc;
+    --kk-muted: #bdbcbc;
+    --kk-line: #3a3a3a;
+    --kk-ok: #fff;
+    --kk-low: #f2b134;
+    --kk-full: #ff5a4d;
+    --kk-radius: 12px;
+    --kk-radius-sm: 8px;
+    --kk-ease: 0.3s linear;
+
+    --bs-body-font-family: 'Kanit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --bs-body-color: #fff;
+    --bs-body-bg: #000;
+    --bs-border-color: var(--kk-line);
+    --bs-link-color: #fff;
+    --bs-link-hover-color: var(--kk-gray);
+    --bs-secondary-color: var(--kk-gray);
+    --bs-emphasis-color: #fff;
 }
+
+* { scrollbar-width: thin; scrollbar-color: #fff transparent; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background-color: #fff; }
+
+html { scroll-behavior: smooth; }
 
 body {
-    background: var(--kk-paper);
-    color: var(--kk-ink);
+    background: var(--kk-black);
+    color: var(--kk-white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
 
+h1, h2, h3 { font-weight: 700; letter-spacing: 0; }
+
+::selection { background: #fff; color: #000; }
+
+:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.kk-main { padding-top: 2rem; padding-bottom: 4rem; min-height: 70vh; }
+
+/* ---------- Navbar (gaya Navbar/Landing Page) ---------- */
 .kk-nav {
-    background: var(--kk-teal);
+    background: #000;
+    border-bottom: 2px solid #fff;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 0.7rem 0;
+}
+
+.kk-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+.kk-brand:hover { color: #fff; }
+
+.kk-brand-mark {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    background: #fff;
+    color: #000;
+    font-size: 1.05rem;
+    font-weight: 700;
+    transition: var(--kk-ease);
+}
+
+.kk-brand:hover .kk-brand-mark { background: #000; color: #fff; }
+
+.kk-nav .nav-link {
+    position: relative;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.05rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: 0;
+    transition: var(--kk-ease);
+}
+
+/* garis bawah yang meluncur dari kiri ke kanan */
+.kk-nav .nav-link::after {
+    content: '';
+    display: block;
+    border-bottom: 2px solid #fff;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s linear;
+}
+
+.kk-nav .nav-link:hover,
+.kk-nav .nav-link.active { color: #fff; background: transparent; }
+
+.kk-nav .nav-link:hover::after,
+.kk-nav .nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.navbar-toggler { border: 2px solid #fff; border-radius: 8px; }
+.navbar-toggler:focus { box-shadow: none; }
+.kk-nav .navbar-toggler-icon { filter: invert(1); }
+
+/* ---------- Tombol (gaya tombol outline TikTok-main) ---------- */
+.btn {
+    border-radius: var(--kk-radius-sm);
+    font-weight: 600;
+    border-width: 2px;
+    transition: var(--kk-ease);
 }
 
 .btn-accent {
-    background: #115e59;
-    color: #fff;
-    border: none;
-    font-weight: 650;
+    background: #fff;
+    color: #000;
+    border: 2px solid #fff;
 }
 
 .btn-accent:hover,
-.btn-accent:focus {
-    background: var(--kk-teal);
+.btn-accent:focus,
+.btn-accent:active {
+    background: transparent !important;
+    border-color: #fff !important;
+    color: #fff !important;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+.btn-ghost:hover,
+.btn-ghost:focus {
+    background: #fff;
+    border-color: #fff;
+    color: #000;
+}
+
+.btn-soft {
+    background: var(--kk-card);
+    color: #fff;
+    border: 2px solid var(--kk-gray);
+}
+
+.btn-soft:hover { background: #fff; border-color: #fff; color: #000; }
+
+.btn-soft-danger {
+    background: transparent;
+    color: var(--kk-full);
+    border: 2px solid var(--kk-full);
+}
+
+.btn-soft-danger:hover { background: var(--kk-full); border-color: var(--kk-full); color: #000; }
+
+.btn-outline-secondary {
+    --bs-btn-color: #fff;
+    --bs-btn-border-color: var(--kk-gray);
+    --bs-btn-hover-bg: #fff;
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-border-color: #fff;
+    --bs-btn-active-bg: #fff;
+    --bs-btn-active-color: #000;
+}
+
+/* ---------- Panel, form, tabel (gaya Product Card) ---------- */
+.kk-panel,
+.form-glass {
+    background: var(--kk-card);
+    border: 2px solid var(--kk-gray);
+    border-radius: var(--kk-radius);
+    transition: 0.2s linear;
+}
+
+.kk-panel:hover,
+.form-glass:hover { border-color: #fff; }
+
+.kk-panel-title { font-size: 1.15rem; margin-bottom: 1rem; }
+
+.form-label { font-weight: 500; font-size: 0.95rem; }
+
+.form-control,
+.form-select {
+    background-color: #000;
+    color: #fff;
+    border: 2px solid var(--kk-gray);
+    border-radius: var(--kk-radius-sm);
+    padding: 0.6rem 0.8rem;
+    transition: 0.2s linear;
+}
+
+.form-control::placeholder { color: #7d7d7d; }
+
+.form-control:focus,
+.form-select:focus {
+    background-color: #000;
+    color: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+}
+
+.form-select { --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e"); }
+
+.form-control.is-invalid,
+.form-select.is-invalid { border-color: var(--kk-full); }
+.invalid-feedback { color: var(--kk-full); }
+.form-text { color: var(--kk-gray); }
+
+.kk-page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.kk-page-head h1 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin: 0 0 0.25rem; }
+.kk-page-head p { margin: 0; color: var(--kk-muted); max-width: 46rem; }
+
+.kk-table {
+    --bs-table-bg: transparent;
+    --bs-table-color: #fff;
+    --bs-table-border-color: var(--kk-line);
+    --bs-table-hover-bg: #0d0d0d;
+    --bs-table-hover-color: #fff;
+}
+
+.kk-table thead th {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--kk-gray);
+    background: #000;
+    border-bottom: 2px solid #fff;
+    padding: 0.85rem 1rem;
+    white-space: nowrap;
+}
+
+.kk-table tbody td {
+    padding: 0.9rem 1rem;
+    border-color: var(--kk-line);
+    background: transparent;
     color: #fff;
 }
 
-.form-glass {
-    background: #fff;
-    border: 1px solid #d7e4df;
-    border-radius: 16px;
-}
+.kk-table tbody tr { transition: 0.2s linear; }
+.kk-table tbody tr:hover td { background: #0d0d0d; }
+
+.kk-link { color: #fff; font-weight: 500; text-decoration: none; }
+.kk-link:hover { color: var(--kk-gray); text-decoration: underline; }
 
 .course-code {
     font-weight: 700;
     letter-spacing: 0.04em;
-    color: var(--kk-teal);
+    color: #fff;
+    font-variant-numeric: tabular-nums;
 }
 
 .seat-pill {
     display: inline-flex;
-    padding: 2px 10px;
+    padding: 2px 12px;
     border-radius: 999px;
     font-size: 0.8rem;
-    font-weight: 700;
+    font-weight: 600;
+    border: 2px solid currentColor;
+    background: transparent;
 }
 
-.seat-pill.ok { background: #d1fae5; color: #065f46; }
-.seat-pill.low { background: #fef3c7; color: #92400e; }
-.seat-pill.full { background: #fee2e2; color: #991b1b; }
+.seat-pill.ok { color: #fff; }
+.seat-pill.low { color: var(--kk-low); }
+.seat-pill.full { color: var(--kk-full); }
+
+/* ---------- Flash, kosong ---------- */
+.kk-flash {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--kk-card);
+    border: 2px solid #fff;
+    color: #fff;
+    border-radius: var(--kk-radius-sm);
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.kk-flash-icon {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex: none;
+}
+
+.kk-empty {
+    text-align: center;
+    padding: 2rem 1rem;
+    border: 2px dashed var(--kk-gray);
+    border-radius: var(--kk-radius);
+    background: var(--kk-card);
+}
+
+.kk-empty p { color: var(--kk-muted); margin: 0.25rem 0 1rem; }
+
+/* ---------- Meter kursi ---------- */
+.kk-meter small { display: block; margin-top: 0.35rem; color: var(--kk-muted); font-size: 0.8rem; }
+
+.kk-meter-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: #333;
+    overflow: hidden;
+}
+
+.kk-meter-bar span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--kk-ok);
+    transition: width 0.4s linear;
+}
+
+.kk-meter.low .kk-meter-bar span { background: var(--kk-low); }
+.kk-meter.full .kk-meter-bar span { background: var(--kk-full); }
+.kk-meter.full small { color: var(--kk-full); font-weight: 600; }
+
+/* ---------- Hero beranda (gaya Landing Page) ---------- */
+.kk-hero {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+    padding: 1rem 0 3rem;
+}
+
+.kk-hero h1 {
+    font-size: clamp(2.2rem, 4.8vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.kk-hero-copy > p { color: var(--kk-gray); font-size: 1.15rem; max-width: 34rem; margin-bottom: 1.5rem; }
+
+.kk-facts {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 2px solid #fff;
+}
+
+.kk-facts dt { font-size: 0.85rem; color: var(--kk-gray); font-weight: 500; }
+.kk-facts dd { margin: 0; font-size: 1.8rem; font-weight: 700; color: #fff; }
+
+.kk-hero-visual { position: relative; }
+
+.kk-hero-visual img {
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    object-fit: cover;
+    border-radius: var(--kk-radius);
+    border: 2px solid var(--kk-gray);
+    filter: grayscale(1) contrast(1.05);
+    display: block;
+    transition: 0.3s linear;
+}
+
+.kk-hero-visual:hover img { border-color: #fff; filter: grayscale(0.4) contrast(1.05); }
+
+.kk-live {
+    position: absolute;
+    left: -1.5rem;
+    bottom: -1.5rem;
+    width: min(320px, 85%);
+    background: var(--kk-card);
+    border: 2px solid #fff;
+    border-radius: var(--kk-radius);
+    padding: 1rem 1.1rem;
+}
+
+.kk-live h2 { font-size: 0.95rem; margin: 0 0 0.6rem; }
+
+.kk-live-row { display: flex; align-items: center; gap: 0.7rem; padding: 0.4rem 0; }
+.kk-live-row strong { display: block; font-size: 0.9rem; line-height: 1.2; }
+.kk-live-row small { color: var(--kk-muted); }
+.kk-live-empty { margin: 0; font-size: 0.88rem; color: var(--kk-muted); }
+
+.kk-avatar {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+    font-weight: 700;
+    flex: none;
+}
+
+/* ---------- Kartu kursus (gaya Product Card) ---------- */
+.kk-section { padding-bottom: 2rem; }
+
+.kk-section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+}
+
+.kk-section-head h2 { font-size: 1.5rem; margin: 0; }
+.kk-section-head a { color: #fff; font-weight: 500; text-decoration: none; }
+.kk-section-head a::after {
+    content: '';
+    display: block;
+    border-bottom: 2px solid #fff;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s linear;
+}
+.kk-section-head a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.kk-course {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--kk-card);
+    border: 2px solid var(--kk-gray);
+    border-radius: var(--kk-radius);
+    padding: 1.25rem;
+    transition: 0.2s linear;
+}
+
+.kk-course:hover { border-color: #fff; transform: translateY(-4px); }
+
+.kk-course h3 { font-size: 1.25rem; margin: 0.6rem 0 0.35rem; }
+.kk-course p { color: var(--kk-gray); font-size: 0.95rem; flex: 1; }
+.kk-date { font-size: 0.8rem; color: var(--kk-gray); font-weight: 500; }
+
+.kk-course-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--kk-line);
+}
+
+/* ---------- Detail kursus ---------- */
+.kk-detail { margin: 0; }
+
+.kk-detail > div {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--kk-line);
+}
+
+.kk-detail > div:last-child { border-bottom: 0; }
+.kk-detail dt { color: var(--kk-gray); font-weight: 500; }
+.kk-detail dd { margin: 0; }
+
+.kk-people { list-style: none; margin: 1rem 0 0; padding: 0; }
+
+.kk-people li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-top: 1px solid var(--kk-line);
+}
+
+.kk-people strong,
+.kk-person strong { display: block; line-height: 1.2; }
+.kk-people small,
+.kk-person small { color: var(--kk-gray); }
+.kk-people-empty { color: var(--kk-gray); display: block !important; }
+
+/* ---------- Laporan ---------- */
+.kk-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.kk-stats > div {
+    background: var(--kk-card);
+    color: #fff;
+    border: 2px solid var(--kk-gray);
+    border-radius: var(--kk-radius);
+    padding: 1rem 1.25rem;
+    transition: 0.2s linear;
+}
+
+.kk-stats > div:hover { border-color: #fff; }
+
+.kk-stats span { display: block; font-size: 2rem; font-weight: 700; line-height: 1.1; }
+.kk-stats small { color: var(--kk-gray); font-weight: 500; }
+
+.kk-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding: 1rem;
+    border-bottom: 1px solid var(--kk-line);
+}
+
+.kk-filter .form-select { max-width: 320px; }
+
+.kk-person { display: flex; align-items: center; gap: 0.75rem; }
+
+.kk-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #fff;
+    background: transparent;
+    border: 2px solid #fff;
+    padding: 1px 12px 1px 10px;
+    border-radius: 999px;
+}
+
+.kk-status::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+/* ---------- Tiket enrollment ---------- */
+.kk-ticket {
+    --notch: 14px;
+    background: var(--kk-card);
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 16px;
+    position: sticky;
+    top: 5.5rem;
+    overflow: hidden;
+}
+
+.kk-ticket-top { padding: 1.6rem 1.6rem 1.4rem; }
+
+.kk-ticket-code {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 2px 10px;
+    border-radius: 999px;
+    margin-bottom: 0.9rem;
+}
+
+.kk-ticket-top h2 { font-size: 1.6rem; margin: 0 0 0.4rem; line-height: 1.2; }
+.kk-ticket-top p { margin: 0; color: var(--kk-gray); font-size: 0.92rem; }
+
+.kk-ticket-tear {
+    position: relative;
+    height: 0;
+    border-top: 2px dashed rgba(255, 255, 255, 0.35);
+    margin: 0 1.2rem;
+}
+
+.kk-ticket-tear::before,
+.kk-ticket-tear::after {
+    content: '';
+    position: absolute;
+    top: calc(var(--notch) / -2 - 1px);
+    width: var(--notch);
+    height: var(--notch);
+    border-radius: 50%;
+    background: #000;
+    border: 2px solid #fff;
+}
+
+.kk-ticket-tear::before { left: calc(-1.2rem - var(--notch) / 2); }
+.kk-ticket-tear::after { right: calc(-1.2rem - var(--notch) / 2); }
+
+.kk-ticket-body { padding: 1.4rem 1.6rem 1.6rem; }
+
+.kk-ticket-body dl {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.25rem;
+    margin: 0 0 1.25rem;
+}
+
+.kk-ticket-body dt { font-size: 0.78rem; color: var(--kk-gray); font-weight: 500; }
+.kk-ticket-body dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+
+.kk-ticket .kk-meter-bar { background: #333; }
+.kk-ticket .kk-meter small { color: var(--kk-gray); }
+.kk-ticket .kk-meter.low .kk-meter-bar span { background: var(--kk-low); }
+.kk-ticket .kk-meter.full small { color: var(--kk-full); }
+
+.kk-ticket.is-empty .kk-ticket-top h2 { opacity: 0.75; }
+
+/* ---------- Footer (gaya Footer) ---------- */
+.kk-footer {
+    border-top: 2px solid #fff;
+    padding: 1.75rem 0 2rem;
+    color: var(--kk-gray);
+    font-size: 0.9rem;
+}
+
+.kk-footer .container {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.kk-footer strong { color: #fff; font-size: 1.1rem; }
+
+/* ---------- Responsif ---------- */
+@media (max-width: 991.98px) {
+    .kk-hero { grid-template-columns: 1fr; gap: 2rem; }
+    .kk-live { left: 0.75rem; bottom: -1.25rem; }
+    .kk-ticket { position: static; }
+    .kk-nav .navbar-collapse { padding-top: 0.75rem; }
+}
+
+@media (max-width: 575.98px) {
+    .kk-stats { grid-template-columns: 1fr; }
+    .kk-facts { gap: 1.25rem; }
+    .kk-detail > div { grid-template-columns: 1fr; gap: 0.15rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kk-meter-bar span,
+    .kk-course,
+    .btn { transition: none; }
+    .kk-course:hover { transform: none; }
+}
