@@ -6,67 +6,44 @@
 <div class="kk-page-head">
     <div>
         <h1>Daftar Kursus</h1>
-        <p>Data diambil dari MySQL melalui Eloquent. Kolom Terisi dihitung dari tabel enrollments.</p>
+        <p>Cari berdasarkan kode atau nama, saring berdasarkan status. Hasil dibagi 10 data per halaman.</p>
     </div>
     <a href="{{ route('courses.create') }}" class="btn btn-accent">+ Tambah Kursus</a>
 </div>
 
-<div class="kk-panel p-0">
-    <div class="table-responsive">
-        <table class="table kk-table mb-0 align-middle">
-            <thead>
-                <tr>
-                    <th>Kode</th>
-                    <th>Nama</th>
-                    <th>Biaya</th>
-                    <th style="min-width: 190px">Terisi</th>
-                    <th>Mulai</th>
-                    <th>Status</th>
-                    <th class="text-end">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($courses as $course)
-                    @php
-                        $statusClass = match ($course->status) {
-                            'open' => 'ok',
-                            'draft' => 'low',
-                            default => 'full',
-                        };
-                    @endphp
-                    <tr>
-                        <td><span class="course-code">{{ $course->code }}</span></td>
-                        <td class="fw-semibold">{{ $course->name }}</td>
-                        <td>Rp {{ number_format($course->fee, 0, ',', '.') }}</td>
-                        <td>@include('partials.seat-meter', ['enrolled' => $course->enrollments_count, 'quota' => $course->quota])</td>
-                        <td>{{ $course->start_date->format('d/m/Y') }}</td>
-                        <td><span class="seat-pill {{ $statusClass }}">{{ ucfirst($course->status) }}</span></td>
-                        <td>
-                            <div class="d-flex gap-1 flex-wrap justify-content-end">
-                                <a href="{{ route('courses.show', $course) }}" class="btn btn-sm btn-soft">Detail</a>
-                                <a href="{{ route('courses.edit', $course) }}" class="btn btn-sm btn-soft">Edit</a>
-                                <form method="POST"
-                                      action="{{ route('courses.destroy', $course) }}"
-                                      onsubmit="return confirm('Hapus kursus ini? Data enrollment kursus ini ikut terhapus.')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-soft-danger">Hapus</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="7">
-                            <div class="kk-empty border-0 my-3">
-                                <strong>Belum ada data kursus.</strong>
-                                <p>Tambahkan kursus pertama, atau jalankan <code>php artisan db:seed --class=CourseSeeder</code>.</p>
-                            </div>
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+{{-- Dashboard count (tidak terpengaruh search/filter) --}}
+<div class="kk-stats kk-stats-4">
+    <div><span>{{ $stats['total'] }}</span><small>Total kursus</small></div>
+    <div><span>{{ $stats['open'] }}</span><small>Kursus open</small></div>
+    <div><span>{{ $stats['participants'] }}</span><small>Peserta</small></div>
+    <div><span>{{ $stats['enrollments'] }}</span><small>Pendaftaran</small></div>
 </div>
+
+{{-- Form GET = fallback tanpa JavaScript. Tidak butuh @csrf (tidak mengubah data). --}}
+<form id="course-filter" method="GET" action="{{ route('courses.index') }}" class="row g-2 mb-3">
+    <div class="col-md-6">
+        <label for="live-search" class="visually-hidden">Cari kursus</label>
+        <input id="live-search" type="search" name="q" value="{{ $search }}"
+               class="form-control" placeholder="Cari kode atau nama kursus" autocomplete="off">
+    </div>
+    <div class="col-md-3">
+        <label for="status-filter" class="visually-hidden">Status</label>
+        <select id="status-filter" name="status" class="form-select">
+            <option value="">Semua status</option>
+            <option value="open" @selected($status === 'open')>Open</option>
+            <option value="closed" @selected($status === 'closed')>Closed</option>
+            <option value="draft" @selected($status === 'draft')>Draft</option>
+        </select>
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button class="btn btn-accent" type="submit">Cari</button>
+        <a href="{{ route('courses.index') }}" class="btn btn-ghost">Reset</a>
+    </div>
+</form>
+
+<div id="course-error" class="kk-inline-error" role="alert" hidden>
+    Gagal memuat hasil. Tekan Cari untuk memuat ulang halaman.
+</div>
+
+@include('courses._results')
 @endsection

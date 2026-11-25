@@ -84,3 +84,59 @@ $(function () {
         $('#course_id').trigger('change');
     }
 });
+
+/* ------------------------------------------------------------
+   Pertemuan 13 - live search + filter + pagination (Ajax opsional)
+   Form GET di halaman tetap menjadi fallback tanpa JavaScript.
+   ------------------------------------------------------------ */
+let searchTimer;
+let currentRequest = null;
+
+function loadCourses(url) {
+    const $form = $('#course-filter');
+    if (!$form.length) return;
+
+    const target = url || $form.attr('action');
+    const params = { q: $('#live-search').val(), status: $('#status-filter').val() };
+
+    if (currentRequest) currentRequest.abort(); // buang respons lama yang belum selesai
+
+    $('#course-error').prop('hidden', true);
+    $('#course-results').addClass('is-loading');
+
+    currentRequest = $.get(target, { ...params, partial: 1 })
+        .done(function (html) {
+            $('#course-results').replaceWith(html);
+
+            // Alamat di browser tetap bisa disalin: tanpa parameter partial.
+            const page = new URL(target, window.location.origin).searchParams.get('page');
+            const query = new URLSearchParams();
+            if (params.q) query.set('q', params.q);
+            if (params.status) query.set('status', params.status);
+            if (page) query.set('page', page);
+            const qs = query.toString();
+            history.replaceState(null, '', $form.attr('action') + (qs ? `?${qs}` : ''));
+        })
+        .fail(function (xhr) {
+            if (xhr.statusText === 'abort') return;
+            $('#course-results').removeClass('is-loading');
+            $('#course-error').prop('hidden', false);
+            console.error('Gagal memuat hasil course.');
+        });
+}
+
+// Debounce 300 ms: request dikirim setelah pengguna berhenti mengetik.
+$(document).on('input', '#live-search', function () {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => loadCourses(), 300);
+});
+
+$(document).on('change', '#status-filter', function () {
+    loadCourses();
+});
+
+// Pagination lewat Ajax (delegated, karena #course-results diganti setiap kali).
+$(document).on('click', '#course-results .pagination a', function (e) {
+    e.preventDefault();
+    loadCourses($(this).attr('href'));
+});

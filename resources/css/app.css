@@ -670,3 +670,112 @@ h1, h2, h3 { font-weight: 700; letter-spacing: 0; }
     .btn { transition: none; }
     .kk-course:hover { transform: none; }
 }
+
+/* ============================================================
+   Pertemuan 13 - Search, filter, pagination (gaya tema hitam-putih)
+   ============================================================ */
+.kk-stats-4 { grid-template-columns: repeat(4, 1fr); }
+
+#course-results { transition: opacity var(--kk-ease); }
+#course-results.is-loading { opacity: 0.45; pointer-events: none; }
+
+.kk-result-foot {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.85rem 1rem;
+    border-top: 1px solid var(--kk-line);
+    background: var(--kk-card-2);
+    border-radius: 0 0 calc(var(--kk-radius) - 2px) calc(var(--kk-radius) - 2px);
+}
+
+.kk-result-meta { color: var(--kk-gray); font-size: 0.9rem; }
+.kk-result-meta strong { color: #fff; font-weight: 600; }
+
+.kk-inline-error {
+    border: 1px solid var(--kk-full);
+    color: var(--kk-full);
+    border-radius: var(--kk-radius-sm);
+    padding: 0.6rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.kk-inline-error[hidden] { display: none; }
+
+/* Pagination segmented: tombol menyatu dalam satu kotak, halaman aktif biru */
+.kk-pagination .pagination {
+    --kk-blue: #0d6efd;
+    --kk-blue-soft: #6ea8fe;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    background: var(--kk-card);
+    border: 1px solid var(--kk-line);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.kk-pagination .page-item { margin: 0; }
+
+.kk-pagination .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 38px;
+    padding: 0 0.75rem;
+    margin: 0;
+    border: 0;
+    border-left: 1px solid var(--kk-line);
+    border-radius: 0 !important;
+    background: transparent;
+    color: var(--kk-blue-soft);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    box-shadow: none;
+    transition: background var(--kk-ease), color var(--kk-ease);
+}
+
+.kk-pagination .page-item:first-child .page-link { border-left: 0; }
+
+.kk-pagination a.page-link:hover,
+.kk-pagination a.page-link:focus-visible {
+    background: rgba(13, 110, 253, 0.18);
+    color: #fff;
+    outline: none;
+}
+
+.kk-pagination .page-item.active .page-link {
+    background: var(--kk-blue);
+    color: #fff;
+    font-weight: 600;
+}
+
+.kk-pagination .page-item.disabled .page-link {
+    background: #262626;
+    color: #6b6b6b;
+    cursor: not-allowed;
+}
+
+.kk-chevron {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@media (max-width: 767.98px) {
+    .kk-stats-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 575.98px) {
+    .kk-stats-4 { grid-template-columns: 1fr 1fr; }
+    .kk-result-foot { justify-content: center; text-align: center; }
+}
