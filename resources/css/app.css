@@ -951,3 +951,66 @@ code {
 }
 .kk-mini-stat strong { display: block; font-size: 1.8rem; line-height: 1.1; }
 .kk-mini-stat span { color: var(--kk-gray); font-size: 0.9rem; }
+
+/* ---------- Dashboard personal ---------- */
+.kk-dash-hero {
+    background: #0d0d0d;
+    border: 1px solid var(--kk-line);
+    border-radius: var(--kk-radius);
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
+}
+.kk-dash-eyebrow {
+    font-size: 0.8rem;
+    color: var(--kk-muted);
+    margin: 0 0 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+.kk-dash-title {
+    font-size: 1.75rem;
+    margin: 0 0 0.4rem;
+}
+.kk-dash-title span { color: #ff4d4f; }
+.kk-dash-lead {
+    color: var(--kk-muted);
+    margin: 0;
+    max-width: 36rem;
+    font-size: 0.95rem;
+}
+.kk-info-box {
+    background: #141414;
+    border: 1px solid var(--kk-line);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+}
+.kk-info-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--kk-muted);
+    margin-bottom: 0.25rem;
+}
+.kk-info-box strong {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+.badge-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #14532d;
+    color: #86efac;
+}
+.badge-status.inactive {
+    background: #450a0a;
+    color: #fca5a5;
+}
+

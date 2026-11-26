@@ -51,11 +51,30 @@ class LoginController extends Controller
             ]);
         }
 
+        $user = Auth::user();
+
+        // Cek status aktif
+        if (! $user->isActive()) {
+            Auth::logout();
+            RateLimiter::hit($throttleKey, 60);
+
+            throw ValidationException::withMessages([
+                'login' => 'Akun Anda telah dinonaktifkan. Hubungi administrator.',
+            ]);
+        }
+
+        // Catat waktu login terakhir
+        $user->forceFill(['last_login_at' => now()])->save();
+
         RateLimiter::clear($throttleKey);
         $request->session()->regenerate(); // cegah session fixation
 
-        return redirect()->intended(route('profile'))
-            ->with('success', 'Selamat datang, '.Auth::user()->name.'.');
+        $destination = $user->isAdmin()
+            ? route('admin.dashboard')
+            : route('dashboard');
+
+        return redirect()->intended($destination)
+            ->with('success', 'Selamat datang, '.$user->name.'.');
     }
 
     public function destroy(Request $request): RedirectResponse

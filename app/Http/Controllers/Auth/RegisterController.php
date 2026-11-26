@@ -44,11 +44,12 @@ class RegisterController extends Controller
             'email' => Str::lower($data['email']),
             'password' => $data['password'],
             'role' => 'user',
+            'is_active' => true,
         ]);
 
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('profile')->with('success', 'Akun berhasil dibuat. Selamat datang, '.$user->name.'.');
+        return redirect()->route('dashboard')->with('success', 'Akun berhasil dibuat. Selamat datang, '.$user->name.'.');
     }
 }

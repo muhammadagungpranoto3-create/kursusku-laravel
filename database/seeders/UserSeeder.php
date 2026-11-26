@@ -16,10 +16,50 @@ class UserSeeder extends Seeder
         User::updateOrCreate(
             ['username' => 'admin'],
             [
-                'name' => 'Administrator',
+                'name' => 'Administrator KursusKu',
                 'email' => 'admin@kursusku.test',
                 'password' => 'admin123',
                 'role' => 'admin',
+                'is_active' => true,
+                'phone' => '081200000001',
+                'last_login_at' => now(),
+            ],
+        );
+
+        User::updateOrCreate(
+            ['username' => 'bima'],
+            [
+                'name' => 'Bima Putra',
+                'email' => 'bima@kursusku.test',
+                'password' => 'password123',
+                'role' => 'user',
+                'is_active' => true,
+                'phone' => '081200000003',
+            ],
+        );
+
+        User::updateOrCreate(
+            ['username' => 'citra'],
+            [
+                'name' => 'Citra Nabila',
+                'email' => 'citra@kursusku.test',
+                'password' => 'password123',
+                'role' => 'user',
+                'is_active' => true,
+                'phone' => '081200000004',
+            ],
+        );
+
+        User::updateOrCreate(
+            ['username' => 'alyaaja'],
+            [
+                'name' => 'Alya Rahmatina',
+                'email' => 'alya@kursusku.test',
+                'password' => 'password123',
+                'role' => 'user',
+                'is_active' => true,
+                'phone' => '081200000002',
+                'last_login_at' => now()->subMinute(),
             ],
         );
 
@@ -30,6 +70,7 @@ class UserSeeder extends Seeder
                 'email' => 'peserta@kursusku.test',
                 'password' => 'peserta123',
                 'role' => 'user',
+                'is_active' => true,
             ],
         );
     }

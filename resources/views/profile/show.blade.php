@@ -8,10 +8,14 @@
         <h1>Profil Saya</h1>
         <p>Ringkasan akun dan pintasan ke fitur KursusKu.</p>
     </div>
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" class="btn btn-soft-danger">Keluar</button>
-    </form>
+    <div class="d-flex gap-2 flex-wrap">
+        <a href="{{ route('dashboard') }}" class="btn btn-ghost btn-sm">Dashboard</a>
+        <a href="{{ route('profile.edit') }}" class="btn btn-accent btn-sm">Edit Profil</a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-soft-danger btn-sm">Keluar</button>
+        </form>
+    </div>
 </div>
 
 <div class="row g-4">
@@ -31,23 +35,41 @@
                 <div><dt>Nama lengkap</dt><dd>{{ $user->name }}</dd></div>
                 <div><dt>Username</dt><dd>{{ $user->username ?? '-' }}</dd></div>
                 <div><dt>Email</dt><dd>{{ $user->email }}</dd></div>
+                <div><dt>Telepon</dt><dd>{{ $user->phone ?: '-' }}</dd></div>
                 <div><dt>Peran</dt><dd>{{ $user->isAdmin() ? 'Admin' : 'Pengguna' }}</dd></div>
+                <div><dt>Status</dt><dd>{{ $user->is_active ? 'Aktif' : 'Nonaktif' }}</dd></div>
+                <div><dt>Login terakhir</dt><dd>{{ $user->last_login_at?->format('d/m/Y H:i') ?? 'Belum pernah' }}</dd></div>
                 <div><dt>Bergabung</dt><dd>{{ $user->created_at?->translatedFormat('d F Y') ?? '-' }}</dd></div>
             </dl>
         </section>
 
-        <section class="kk-panel p-4">
-            <h2 class="kk-panel-title">Ringkasan KursusKu</h2>
-            <div class="row g-3 text-center">
-                <div class="col-4"><div class="kk-mini-stat"><strong>{{ $stats['courses'] }}</strong><span>Kursus</span></div></div>
-                <div class="col-4"><div class="kk-mini-stat"><strong>{{ $stats['participants'] }}</strong><span>Peserta</span></div></div>
-                <div class="col-4"><div class="kk-mini-stat"><strong>{{ $stats['enrollments'] }}</strong><span>Pendaftaran</span></div></div>
-            </div>
-            <div class="d-flex flex-wrap gap-2 mt-4">
-                <a class="btn btn-ghost btn-sm" href="{{ route('courses.index') }}">Kelola kursus</a>
-                <a class="btn btn-ghost btn-sm" href="{{ route('enrollments.index') }}">Lihat laporan</a>
-                <a class="btn btn-ghost btn-sm" href="{{ route('enrollments.create') }}">Daftarkan peserta</a>
-            </div>
+        <section class="kk-panel p-4" id="password">
+            <h2 class="kk-panel-title">Ubah Kata Sandi</h2>
+            <p class="kk-muted mb-3" style="font-size:0.9rem;">Pastikan password baru kuat dan tidak digunakan di layanan lain.</p>
+
+            <form method="POST" action="{{ route('profile.password') }}" class="form-glass p-0" novalidate>
+                @csrf
+                @method('PUT')
+                <div class="mb-3">
+                    <label class="form-label" for="current_password">Password Saat Ini</label>
+                    <input id="current_password" name="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" required>
+                    @error('current_password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password Baru</label>
+                    <input id="password" name="password" type="password" class="form-control @error('password') is-invalid @enderror" required>
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password_confirmation">Konfirmasi Password Baru</label>
+                    <input id="password_confirmation" name="password_confirmation" type="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-accent">Simpan Password</button>
+            </form>
         </section>
     </div>
 </div>

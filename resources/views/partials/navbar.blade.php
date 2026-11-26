@@ -20,17 +20,21 @@
                     <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('courses.*') ? 'active' : '' }}" href="{{ route('courses.index') }}">Kursus</a>
+                    <a class="nav-link {{ request()->routeIs('courses.*') ? 'active' : '' }}" href="{{ route('courses.index') }}">Daftar Kursus</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('enrollments.index') ? 'active' : '' }}" href="{{ route('enrollments.index') }}">Laporan</a>
+                    <a class="nav-link {{ request()->routeIs('enrollments.create') ? 'active' : '' }}" href="{{ route('enrollments.create') }}">Pendaftaran</a>
                 </li>
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
+                    </li>
+                @endauth
                 <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                     <a class="btn btn-accent btn-sm" href="{{ route('enrollments.create') }}">Daftarkan peserta</a>
                 </li>
 
                 @auth
-                    {{-- Sudah login: logo profil + menu Profil Saya / Keluar --}}
                     <li class="nav-item dropdown ms-lg-2 mt-2 mt-lg-0">
                         <a class="kk-user-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menu profil">
                             @include('partials.avatar', ['user' => auth()->user(), 'size' => 'sm'])
@@ -41,7 +45,11 @@
                                 <strong>{{ auth()->user()->name }}</strong>
                                 <small>{{ auth()->user()->email }}</small>
                             </li>
-                            <li><a class="dropdown-item {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{ route('profile') }}">Profil Saya</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a></li>
+                            <li><a class="dropdown-item {{ request()->routeIs('profile*') ? 'active' : '' }}" href="{{ route('profile') }}">Profil Saya</a></li>
+                            @if (auth()->user()->isAdmin())
+                                <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Panel</a></li>
+                            @endif
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
