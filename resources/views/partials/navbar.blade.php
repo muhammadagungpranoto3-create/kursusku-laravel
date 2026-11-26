@@ -28,6 +28,34 @@
                 <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                     <a class="btn btn-accent btn-sm" href="{{ route('enrollments.create') }}">Daftarkan peserta</a>
                 </li>
+
+                @auth
+                    {{-- Sudah login: logo profil + menu Profil Saya / Keluar --}}
+                    <li class="nav-item dropdown ms-lg-2 mt-2 mt-lg-0">
+                        <a class="kk-user-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menu profil">
+                            @include('partials.avatar', ['user' => auth()->user(), 'size' => 'sm'])
+                            <span class="kk-user-name">{{ auth()->user()->username ?? auth()->user()->name }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end kk-dropdown">
+                            <li class="kk-dropdown-head">
+                                <strong>{{ auth()->user()->name }}</strong>
+                                <small>{{ auth()->user()->email }}</small>
+                            </li>
+                            <li><a class="dropdown-item {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{ route('profile') }}">Profil Saya</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item kk-logout">Keluar</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li class="nav-item ms-lg-1 mt-2 mt-lg-0">
+                        <a class="btn btn-ghost btn-sm" href="{{ route('login') }}">Masuk</a>
+                    </li>
+                @endauth
             </ul>
         </div>
     </div>

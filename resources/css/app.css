@@ -779,3 +779,175 @@ h1, h2, h3 { font-weight: 700; letter-spacing: 0; }
     .kk-stats-4 { grid-template-columns: 1fr 1fr; }
     .kk-result-foot { justify-content: center; text-align: center; }
 }
+
+/* ============================================================
+   UAS Project Akhir - Login, Daftar, Lupa Password, Profil
+   ============================================================ */
+.kk-muted { color: var(--kk-muted); }
+
+code {
+    color: #fff;
+    background: #000;
+    border: 1px solid var(--kk-line);
+    border-radius: 6px;
+    padding: 0.05rem 0.4rem;
+    font-size: 0.85em;
+}
+
+/* ---------- Kepala halaman auth ---------- */
+.kk-auth-head { margin-bottom: 1.5rem; }
+.kk-auth-head h1 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0.9rem 0 0.25rem; }
+.kk-auth-head p { color: var(--kk-muted); margin: 0; }
+
+.kk-auth-mark {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    font-size: 1.6rem;
+    margin: 0 auto;
+}
+
+.kk-notice {
+    background: #000;
+    border: 2px solid var(--kk-gray);
+    border-radius: var(--kk-radius-sm);
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+}
+
+.kk-notice-link { border-color: #fff; }
+
+/* ---------- Checkbox "Ingat saya" ---------- */
+.kk-check {
+    background-color: #000;
+    border: 2px solid var(--kk-gray);
+    cursor: pointer;
+}
+.kk-check:checked { background-color: #fff; border-color: #fff; --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e"); }
+.kk-check:focus { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15); border-color: #fff; }
+.form-check-label { cursor: pointer; }
+
+/* ---------- Input password + tombol mata (hiding password) ---------- */
+.kk-password { position: relative; }
+.kk-password .form-control { padding-right: 3rem; }
+
+.kk-password-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 3rem;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    border: 0;
+    color: var(--kk-gray);
+    border-radius: 0 var(--kk-radius-sm) var(--kk-radius-sm) 0;
+    transition: var(--kk-ease);
+}
+
+.kk-password-toggle:hover { color: #fff; }
+.kk-password-toggle .icon-eye-off { display: none; }
+.kk-password-toggle[aria-pressed='true'] .icon-eye { display: none; }
+.kk-password-toggle[aria-pressed='true'] .icon-eye-off { display: block; }
+
+/* ---------- Logo profil (inisial) ---------- */
+.kk-logo {
+    display: grid;
+    place-items: center;
+    flex: none;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    user-select: none;
+}
+
+.kk-logo-sm { width: 34px; height: 34px; font-size: 0.8rem; }
+.kk-logo-md { width: 44px; height: 44px; font-size: 1rem; }
+.kk-logo-lg { width: 72px; height: 72px; font-size: 1.6rem; }
+.kk-logo-xl { width: 112px; height: 112px; font-size: 2.6rem; margin: 0 auto 1rem; box-shadow: 0 0 0 6px #000, 0 0 0 8px var(--kk-gray); }
+
+.kk-logo.tone-1 { background: linear-gradient(135deg, #2b2b2b, #5a5a5a); }
+.kk-logo.tone-2 { background: linear-gradient(135deg, #3a1420, #8a2c47); }
+.kk-logo.tone-3 { background: linear-gradient(135deg, #0f2d22, #27795a); }
+.kk-logo.tone-4 { background: linear-gradient(135deg, #1a1f4a, #4553b8); }
+.kk-logo.tone-5 { background: linear-gradient(135deg, #3d2a0b, #a8741a); }
+.kk-logo.tone-6 { background: linear-gradient(135deg, #0b3338, #1f8591); }
+
+/* ---------- Menu pengguna di navbar ---------- */
+.kk-user-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.2rem 0.75rem 0.2rem 0.2rem;
+    border: 2px solid var(--kk-gray);
+    border-radius: 999px;
+    transition: var(--kk-ease);
+}
+
+.kk-user-toggle:hover,
+.kk-user-toggle.show { border-color: #fff; color: #fff; }
+.kk-user-name { font-weight: 500; max-width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.kk-dropdown {
+    --bs-dropdown-bg: var(--kk-card);
+    --bs-dropdown-color: #fff;
+    --bs-dropdown-border-color: var(--kk-gray);
+    --bs-dropdown-border-width: 2px;
+    --bs-dropdown-border-radius: var(--kk-radius);
+    --bs-dropdown-link-color: #fff;
+    --bs-dropdown-link-hover-bg: #fff;
+    --bs-dropdown-link-hover-color: #000;
+    --bs-dropdown-link-active-bg: #fff;
+    --bs-dropdown-link-active-color: #000;
+    --bs-dropdown-divider-bg: var(--kk-line);
+    min-width: 14rem;
+    padding: 0.4rem;
+}
+
+.kk-dropdown .dropdown-item { border-radius: 6px; font-weight: 500; }
+.kk-dropdown-head { padding: 0.5rem 0.75rem 0.6rem; }
+.kk-dropdown-head strong { display: block; line-height: 1.2; }
+.kk-dropdown-head small { color: var(--kk-gray); word-break: break-all; }
+.kk-logout { color: var(--kk-full); }
+.kk-logout:hover { background: var(--kk-full); color: #000; }
+
+/* ---------- Halaman profil ---------- */
+.kk-profile-name { font-size: 1.4rem; margin: 0 0 0.1rem; }
+
+.kk-role {
+    display: inline-block;
+    border: 2px solid var(--kk-gray);
+    border-radius: 999px;
+    padding: 0.1rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.kk-role.is-admin { background: #fff; border-color: #fff; color: #000; }
+
+.kk-dl { margin: 0; }
+.kk-dl > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--kk-line);
+}
+.kk-dl > div:last-child { border-bottom: 0; }
+.kk-dl dt { color: var(--kk-gray); font-weight: 500; }
+.kk-dl dd { margin: 0; font-weight: 500; text-align: right; word-break: break-word; }
+
+.kk-mini-stat {
+    background: #000;
+    border: 2px solid var(--kk-line);
+    border-radius: var(--kk-radius-sm);
+    padding: 0.9rem 0.5rem;
+}
+.kk-mini-stat strong { display: block; font-size: 1.8rem; line-height: 1.1; }
+.kk-mini-stat span { color: var(--kk-gray); font-size: 0.9rem; }

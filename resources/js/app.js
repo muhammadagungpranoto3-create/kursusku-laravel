@@ -140,3 +140,16 @@ $(document).on('click', '#course-results .pagination a', function (e) {
     e.preventDefault();
     loadCourses($(this).attr('href'));
 });
+
+/* ------------------------------------------------------------
+   UAS - fitur hiding password (tombol mata di form login/daftar/reset).
+   data-toggle-password berisi selector input yang ikut ditampilkan/disembunyikan.
+   ------------------------------------------------------------ */
+$(document).on('click', '[data-toggle-password]', function () {
+    const $btn = $(this);
+    const show = $btn.attr('aria-pressed') !== 'true';
+
+    $($btn.data('toggle-password')).attr('type', show ? 'text' : 'password');
+    $btn.attr('aria-pressed', show ? 'true' : 'false')
+        .attr('aria-label', show ? 'Sembunyikan password' : 'Tampilkan password');
+});
